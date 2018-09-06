@@ -1,0 +1,7 @@
+C:\Users\asharma\source\repos\FactoryPattern_API\FactoryPattern_API\bin\Debug\FactoryPattern_API.exe.config
+C:\Users\asharma\source\repos\FactoryPattern_API\FactoryPattern_API\bin\Debug\FactoryPattern_API.exe
+C:\Users\asharma\source\repos\FactoryPattern_API\FactoryPattern_API\bin\Debug\FactoryPattern_API.pdb
+C:\Users\asharma\source\repos\FactoryPattern_API\FactoryPattern_API\obj\Debug\FactoryPattern_API.csprojResolveAssemblyReference.cache
+C:\Users\asharma\source\repos\FactoryPattern_API\FactoryPattern_API\obj\Debug\FactoryPattern_API.csproj.CoreCompileInputs.cache
+C:\Users\asharma\source\repos\FactoryPattern_API\FactoryPattern_API\obj\Debug\FactoryPattern_API.exe
+C:\Users\asharma\source\repos\FactoryPattern_API\FactoryPattern_API\obj\Debug\FactoryPattern_API.pdb
