@@ -6,16 +6,31 @@ using System.Threading.Tasks;
 
 namespace FactoryPattern_API
 {
-    class Hotel :  IProduct
+    class Hotel : Products
     {
         FileDatabase file = new FileDatabase();
         public string Name { get; set; } 
         public bool isBooked { get; set; }
+        public int Price { get; set; }
+        string NameOfProduct { get; set; }
+        int PriceOfProduct { get; set; }
 
-        public void Book()
+        public void GetObjectOfHotel(Hotel product)
         {
-            LogManager.Instance.WriteLog("---Inside Hotel/Book---");
-            file.EnterBookingDetails("Booking Done Successfully --- Hotel");
+            NameOfProduct = product.Name;
+            PriceOfProduct = product.Price;
+        }
+        public override void Book(int typeOfDB)
+        {
+            LogManager.Instance.WriteLog("---Inside CarProduct/Book---");
+            if (typeOfDB == 1)
+            {
+                //Database
+                DatabaseAccess database = new DatabaseAccess();
+                database.UpdateBookingDetails(NameOfProduct, PriceOfProduct, "HotelProduct");
+            }
+            else
+                file.EnterBookingDetails(NameOfProduct, PriceOfProduct, "HotelProduct");
         }
 
         public string GetTypeOfProduct()
@@ -23,10 +38,17 @@ namespace FactoryPattern_API
             return "Hotel";
         }
 
-        public void Save()
+        public override void Save(int typeOfDB)
         {
-            LogManager.Instance.WriteLog("---Inside Hotel/Book---");
-            file.EnterBookingDetails("Booking Done Successfully --- Hotel");
+            LogManager.Instance.WriteLog("---Inside CarProduct/Book---");
+            if (typeOfDB == 1)
+            {
+                //Database
+                DatabaseAccess database = new DatabaseAccess();
+                database.EnterBookingDetails(NameOfProduct, PriceOfProduct, "HotelProduct");
+            }
+            else
+                file.EnterBookingDetails(NameOfProduct, PriceOfProduct, "HotelProduct");
         }
     }
 }

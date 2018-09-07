@@ -12,20 +12,19 @@ namespace FactoryPattern_API
         static void Main(string[] args)
         {
             LogManager.Instance.WriteLog("---Inside Main---");
+             
 
-            Constants messages = new Constants();
+            Constants messages = new Constants(); 
             messages.WelcomeMessage();
             messages.UserChoice();
-
+            messages.DisplayDiscountMessage();
             string descripion = Console.ReadLine();
+             
+            TypeOfProduct typeOfProduct = new TypeOfProduct();
+            Products product = typeOfProduct.GetProduct(descripion);
 
           
-
-            TypeOfProduct typeOfProduct = new TypeOfProduct();
-            IProduct product = typeOfProduct.GetProduct(descripion);
-            
-
-            
         }
+        
     }
 }
