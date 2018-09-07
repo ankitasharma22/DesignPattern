@@ -8,36 +8,49 @@ namespace FactoryPattern_API
 {
     class TypeOfProduct
     {
-        public IProduct GetProduct(string productType)
+       
+        public Products GetProduct(string productType)
         {
             LogManager._instance.WriteLog("---Inside GetProduct---");
-
             MemberInfo carType = typeof(CarProduct);
             MemberInfo airType = typeof(Airways);
             MemberInfo hotelType = typeof(Hotel);
             MemberInfo activityType = typeof(Activity);
             Constants messages = new Constants();
+            ProductDetails product = new ProductDetails();
             object[] attributes = carType.GetCustomAttributes(true);
+
+            messages.EnterName();
+            string nameOfProduct = product.NameOfProduct();
+
+            messages.EnterPrice();
+            int priceOfProduct = product.PriceOfProduct();
+
+            messages.AskTypeOfDB();
+            int typeOfDb = Convert.ToInt32(Console.ReadLine());
 
             if (productType.Equals(carType.Name))
             {
                 LogManager._instance.WriteLog("---Product type = car---");
                 CarProduct carProduct = new CarProduct();
+                CarStrategy discount = new CarStrategy();
+                carProduct.Price = discount.FareCalculation(priceOfProduct);
                 carProduct.isBooked = false;
-                Console.WriteLine("Getting Car Name---");
-                carProduct.Name = Console.ReadLine(); 
 
-                Console.WriteLine("---- Enter your choice: 1. Save Entry 2. Book Entry ----");
-                int userChoice = Convert.ToInt32(Console.ReadLine());
+                
+                carProduct.Name = nameOfProduct;
+                
+
+                carProduct.GetObjectOfCar(carProduct);
+
+                int userChoice = product.BookOrSaveSelectedProduct(); 
                 if (userChoice == 1)
-                    carProduct.Save();
-                else if (userChoice == 2)
-                {
-                    carProduct.Book();
-                    carProduct.isBooked = true;
-                } 
+                    carProduct.Save(typeOfDb);
+                else if (userChoice == 2) 
+                    carProduct.Book(typeOfDb); 
                 else
                     messages.Error();
+              
                 return carProduct;
             }
 
@@ -45,19 +58,21 @@ namespace FactoryPattern_API
             {
                 LogManager._instance.WriteLog("---Product type = airways---");
                 Airways airways = new Airways();
-                airways.isBooked = false;
-                Console.WriteLine("Getting Car Name---");
-                airways.Name = Console.ReadLine();
-                Console.WriteLine("---- Enter your choice: 1. Save Entry 2. Book Entry ----");
+                airways.isBooked = false; 
 
-                int userChoice = Convert.ToInt32(Console.ReadLine());
+                airways.Name = nameOfProduct;
+
+                AirStrategy discount = new AirStrategy();
+                airways.Price = discount.FareCalculation(priceOfProduct);
+
+                airways.GetObjectOfAir(airways);
+                 
+
+                int userChoice = product.BookOrSaveSelectedProduct();
                 if (userChoice == 1)
-                    airways.Save();
+                    airways.Save(typeOfDb);
                 else if (userChoice == 2)
-                {
-                    airways.Book();
-                    airways.isBooked = true;
-                }
+                    airways.Book(typeOfDb);
                 else
                     messages.Error();
 
@@ -69,18 +84,18 @@ namespace FactoryPattern_API
                 LogManager._instance.WriteLog("---Product type = hotel---");
                 Hotel hotel = new Hotel();
                 hotel.isBooked = false;
-                Console.WriteLine("Getting Car Name---");
-                hotel.Name = Console.ReadLine();
 
-                Console.WriteLine("---- Enter your choice: 1. Save Entry 2. Book Entry ----");
-                int userChoice = Convert.ToInt32(Console.ReadLine());
+                hotel.Name = nameOfProduct;
+                HotelStrategy discount = new HotelStrategy();
+                hotel.Price = discount.FareCalculation(priceOfProduct);
+
+                hotel.GetObjectOfHotel(hotel);
+
+                int userChoice = product.BookOrSaveSelectedProduct();
                 if (userChoice == 1)
-                    hotel.Save();
+                    hotel.Save(typeOfDb);
                 else if (userChoice == 2)
-                {
-                    hotel.Book();
-                    hotel.isBooked = true;
-                }
+                    hotel.Book(typeOfDb);
                 else
                     messages.Error();
                 return hotel;
@@ -91,17 +106,17 @@ namespace FactoryPattern_API
                 LogManager._instance.WriteLog("---Product type = activity---");
                 Activity activity = new Activity();
                 activity.isBooked = false;
-                Console.WriteLine("Getting Car Name---");
-                activity.Name = Console.ReadLine();
-                Console.WriteLine("---- Enter your choice: 1. Save Entry 2. Book Entry ----");
-                int userChoice = Convert.ToInt32(Console.ReadLine());
+
+                activity.Name = nameOfProduct;
+                ActivityStrategy discount = new ActivityStrategy();
+                activity.Price = discount.FareCalculation(priceOfProduct);
+                activity.GetObjectOfActivity(activity);
+
+                int userChoice = product.BookOrSaveSelectedProduct();
                 if (userChoice == 1)
-                    activity.Save();
+                    activity.Save(typeOfDb);
                 else if (userChoice == 2)
-                {
-                    activity.Book();
-                    activity.isBooked = true;
-                }
+                    activity.Book(typeOfDb);
                 else
                     messages.Error();
                 return activity;
@@ -109,6 +124,6 @@ namespace FactoryPattern_API
             return new Activity();
         }
 
-       
+
     }
 }

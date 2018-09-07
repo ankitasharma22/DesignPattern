@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static FactoryPattern_API.TypeOfProduct;
 
 namespace FactoryPattern_API
 {
-    interface IProduct
+    interface IStrategy
     {
-        TypeOfProducts GetTypeOfProduct();
-        void Save();
-        void Book();
+        int FareCalculation(int inputPrice);
     }
 }

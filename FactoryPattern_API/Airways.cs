@@ -6,15 +6,32 @@ using System.Threading.Tasks;
 
 namespace FactoryPattern_API
 {
-    class Airways :  IProduct
+    class Airways :  Products
     {
         FileDatabase file = new FileDatabase();
         public string Name { get; set; } 
         public bool isBooked { get; set; }
-        public void Book()
+        public int Price { get; set; }
+        string NameOfProduct { get; set; }
+        int PriceOfProduct { get; set; }
+
+        public void GetObjectOfAir(Airways product)
+        {
+            NameOfProduct = product.Name;
+            PriceOfProduct = product.Price;
+        }
+
+        public override void Book(int typeOfDB)
         {
             LogManager.Instance.WriteLog("---Inside Airways/Book---");
-            file.EnterBookingDetails("Booking Done Successfully --- Airways");
+            if (typeOfDB == 1)
+            {
+                //Database
+                DatabaseAccess database = new DatabaseAccess();
+                database.UpdateBookingDetails(NameOfProduct, PriceOfProduct, "AirProduct");
+            }
+            else
+                file.EnterBookingDetails(NameOfProduct, PriceOfProduct, "AirProduct");
         }
 
         public string GetTypeOfProduct()
@@ -22,10 +39,22 @@ namespace FactoryPattern_API
             return "Air product";
         }
 
-        public void Save()
+        public override void Save(int typeOfDB)
         {
             LogManager.Instance.WriteLog("---Inside Airways/Book---");
-            file.EnterBookingDetails("Booking Done Successfully --- Airways");
+            if (typeOfDB == 1)
+            {
+                //Database
+                DatabaseAccess database = new DatabaseAccess();
+                database.EnterBookingDetails(NameOfProduct, PriceOfProduct, "AirProduct");
+            }
+            else
+                file.EnterBookingDetails(NameOfProduct, PriceOfProduct, "AirProduct");
+        }
+        public void GetObject(CarProduct product)
+        {
+            NameOfProduct = product.Name;
+            PriceOfProduct = product.Price;
         }
     }
 }
